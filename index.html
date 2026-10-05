@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>非遗音乐地理志 MVP</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    #map { height: 100vh; width: 100%; margin: 0; padding: 0; }
+    .popup-content { text-align: center; font-family: sans-serif; }
+    .popup-content h3 { margin: 0 0 8px 0; color: #333; }
+    .popup-content p { margin: 0 0 12px 0; font-size: 14px; color: #666; }
+    audio { width: 220px; outline: none; }
+  </style>
+</head>
+<body style="margin: 0;">
+  <div id="map"></div>
+  <script>
+    const map = L.map('map').setView([32, 110], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 16
+    }).addTo(map);
+
+    const musicData = [
+      {
+        id: "macau-01",
+        title: "澳门咸水歌",
+        description: "水上人家的传统渔歌，反映珠江三角洲的曲调语法。",
+        lat: 22.1987,
+        lng: 113.5439,
+        audioUrl: "./assets/xianshui.mp3" 
+      },
+      {
+        id: "taiwan-01",
+        title: "台湾客家山歌",
+        description: "反映丘陵地形与客家劳动生活的即兴歌唱。",
+        lat: 24.5815,
+        lng: 121.0026,
+        audioUrl: "./assets/hakka.mp3" 
+      },
+      {
+        id: "yunnan-midu-01",
+        title: "弥渡山歌",
+        description: "云南弥渡汉族山歌，旋律高亢婉转，山野间抒发质朴的爱慕情感，西南山歌代表。",
+        lat: 25.3441,
+        lng: 100.4921,
+        audioUrl: "./assets/midushange.mp3"
+      },
+      {
+        id: "shandong-yimeng-01",
+        title: "沂蒙山小调",
+        description: "山东沂蒙地区经典民歌，四句头起承转合，鱼咬尾旋律，歌颂沂蒙风光与人民。",
+        lat: 35.5322,
+        lng: 118.3578,
+        audioUrl: "./assets/yimengshan.mp3"
+      },
+      {
+        id: "hunan-liuyang-01",
+        title: "浏阳河",
+        description: "源自湖南花鼓戏，问答式歌词，轻快灵动，充满湘楚地域韵味，抒发对家乡热爱。",
+        lat: 28.1489,
+        lng: 113.6327,
+        audioUrl: "./assets/liuyanghe.mp3"
+      },
+      {
+        id: "shaanxi-shandandan-01",
+        title: "山丹丹开花红艳艳",
+        description: "陕北信天游体裁，辽阔豪迈，借山丹丹花歌颂红军，西北黄土高原民歌代表。",
+        lat: 36.8177,
+        lng: 109.4664,
+        audioUrl: "./assets/shandandan.mp3"
+      },
+      {
+        id: "guangxi-liusanjie-01",
+        title: "山歌好比春江水",
+        description: "广西壮族山歌，出自彩调剧刘三姐，旋律清澈柔美，充满少数民族生活情趣。",
+        lat: 24.4783,
+        lng: 108.3275,
+        audioUrl: "./assets/guangxi.mp3"
+      }
+    ];
+
+    musicData.forEach(item => {
+      const popupHTML = `
+        <div class="popup-content">
+          <h3>${item.title}</h3>
+          <p>${item.description}</p>
+          <audio controls controlsList="nodownload">
+            <source src="${item.audioUrl}">
+            你的浏览器不支持音讯播放。
+            
+        </div>
+      `;
+      L.marker([item.lat, item.lng]).addTo(map).bindPopup(popupHTML);
+    });
+  </script>
+</body>
+</html>
